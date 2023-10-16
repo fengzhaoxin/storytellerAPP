@@ -1,0 +1,50 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 32
+
+    namespace "com.espressif.esptouch.android"
+    defaultConfig {
+        applicationId "com.espressif.esptouch.android"
+        minSdkVersion 21
+        targetSdkVersion 32
+        versionCode 30
+        versionName "v2.3.2"
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file('signature/espdebug')
+            storePassword 'espdebug'
+            keyAlias 'esp_debug'
+            keyPassword 'espdebug'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+        debug {
+            signingConfig signingConfigs.debug
+        }
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.alibaba:fastjson:1.1.54.android'
+
+    implementation project(":esptouch")
+    implementation project(":esptouch-v2")
+}
